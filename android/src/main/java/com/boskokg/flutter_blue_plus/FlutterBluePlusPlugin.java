@@ -275,6 +275,9 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
           if (grantedScan) {
             ensurePermissionBeforeAction(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? Manifest.permission.BLUETOOTH_CONNECT : null, (grantedConnect, permissionConnect) -> {
               if (grantedConnect) {
+	  	startScan(call, result);
+		/* Android 12+ should not require ACCESS_FINE_LOCATION permission. */
+		/*
                 ensurePermissionBeforeAction(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? Manifest.permission.ACCESS_FINE_LOCATION : null, (grantedLocation, permissionLocation) -> {
                   if (grantedLocation) {
                     startScan(call, result);
@@ -283,6 +286,7 @@ public class FlutterBluePlusPlugin implements FlutterPlugin, MethodCallHandler, 
                     result.error(
                             "no_permissions", String.format("flutter_blue plugin requires %s for scanning", permissionLocation), null);
                 });
+		*/
               }
               else
                 result.error(
